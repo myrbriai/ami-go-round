@@ -15,7 +15,6 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
 <script>
   tailwind.config = {
@@ -72,8 +71,12 @@
 <body>
 <div id="root"></div>
 
-<script type="text/babel" data-presets="react">
-const { useState, useEffect, useMemo } = React;
+<script>
+const {
+  useState,
+  useEffect,
+  useMemo
+} = React;
 
 // ============================================================
 //   BUILT-IN PATTERNS
@@ -86,141 +89,306 @@ const BUILT_IN_PATTERNS = {
     emoji: '🦄',
     blurb: 'Adorable amigurumi unicorn by AnDesign',
     videoUrl: 'https://www.youtube.com/watch?v=XiabF1yyCVY',
-    sections: [
-      {
-        section: 'Head & Body',
-        theme: 'coral',
-        notes: 'Worked in a continuous spiral from the muzzle. Stuff before closing.',
-        rows: [
-          { id: 'hb-start', label: 'Start with 5 ch', count: '(5)' },
-          { id: 'hb-1', label: 'Rnd 1: ch, 4sc, 3sc in 1 st, 3sc, inc, slst', count: '(12)' },
-          { id: 'hb-2', label: 'Rnd 2: ch, inc, 3sc, 3inc, 3sc, 2inc, slst', count: '(18)' },
-          { id: 'hb-3', label: 'Rnd 3: ch, inc, 4sc, [sc, inc] x3, 3sc, [sc, inc] x2, slst', count: '(24)' },
-          { id: 'hb-4', label: 'Rnd 4: ch, inc, [5ch, skip 1ch, 4sc], 5sc, [inc, 2sc] x3, 3sc, inc, [5ch, skip 1ch, 4sc], 2sc, inc, 2sc', count: '(30+16)' },
-          { id: 'hb-5', label: 'Rnd 5: ch, 2sc, [3hdc, sc, 2ch, sc, 3hdc], 22sc, [3hdc, sc, 2ch, sc, 3hdc], 6sc', count: '(30+16)' },
-          { id: 'hb-6', label: 'Rnd 6: ch, sc, inc, [skip the ear], 6sc, [2sc, inc] x3, 7sc, [skip the ear], sc, inc, 2sc, inc, sc, slst', count: '(36)' },
-          { id: 'hb-7-9', label: 'Rnd 7–9: ch, 36sc, slst', count: '(36)' },
-          { id: 'hb-10', label: 'Rnd 10: ch, 33sc, dec, sc, slst', count: '(35)' },
-          { id: 'hb-11', label: 'Rnd 11: ch, 6sc, [sc, dec] x6, 8sc, dec, sc, slst', count: '(28)' },
-          { id: 'hb-12', label: 'Rnd 12: ch, 3sc, [sc, dec] x6, 5sc, inc, sc, slst', count: '(23)' },
-          { id: 'hb-13', label: 'Rnd 13: ch, 3sc, 6dec, 5sc, inc, 2sc, slst', count: '(18)' },
-          { id: 'hb-14', label: 'Rnd 14: ch, 3sc, 3dec, 3sc, [sc, inc] x3, slst', count: '(18)' },
-          { id: 'hb-15', label: 'Rnd 15: ch, [inc, 5sc] x3, slst', count: '(21)' },
-          { id: 'hb-16', label: 'Rnd 16: ch, 2sc, 5hdcpuff, inc, 3sc, 5hdcpuff, 2sc, inc, 6sc, inc, 3sc, slst', count: '(24)' },
-          { id: 'hb-17', label: 'Rnd 17: ch, 3sc, [inc, sc] x4, 13sc, slst', count: '(28)' },
-          { id: 'hb-18-20', label: 'Rnd 18–20: ch, 28sc, slst', count: '(28)' },
-          { id: 'hb-stuff', label: '✂️ Stuff with polyester fiber until firmly filled', count: '' },
-          { id: 'hb-21', label: 'Rnd 21: ch, 3sc, 5hdcpuff, 8sc, 5hdcpuff, 15sc, slst', count: '(28)' },
-          { id: 'hb-24', label: 'Rnd 24: ch, 7dec, slst — fasten off', count: '(7)' },
-        ],
-      },
-      {
-        section: 'Tail',
-        theme: 'plum',
-        notes: 'Start with 6 sc in a magic ring, slst.',
-        rows: [
-          { id: 't-1', label: 'Rnd 1: 2ch, [3hdcpuff] x6, slst', count: '' },
-          { id: 't-2', label: 'Rnd 2: ch, 6dec, slst — fasten off', count: '' },
-        ],
-      },
-      {
-        section: 'Hair (Mane)',
-        theme: 'sky',
-        notes: 'Start with 25 ch.',
-        rows: [{ id: 'h-1', label: 'Row 1: skip 1 ch, 24sc — fasten off', count: '' }],
-      },
-      {
-        section: 'Horn',
-        theme: 'butter',
-        notes: 'Start with 4 sc in a magic ring.',
-        rows: [
-          { id: 'horn-1', label: 'Rnd 1: [sc, inc] x2', count: '' },
-          { id: 'horn-2', label: 'Rnd 2: 6sc', count: '' },
-          { id: 'horn-3', label: 'Rnd 3: [2sc, inc] x2', count: '' },
-          { id: 'horn-4', label: 'Rnd 4: 8sc', count: '' },
-          { id: 'horn-5', label: 'Rnd 5: [3sc, inc] x10 — fasten off', count: '' },
-        ],
-      },
-      {
-        section: 'Wings (make 2)',
-        theme: 'sage',
-        notes: 'Start with 6 ch.',
-        rows: [
-          { id: 'w-1', label: 'Row 1: skip 2 ch, hdc, 2sc, slst', count: '' },
-          { id: 'w-2', label: 'Row 2: turn, ch, 3sc, hdcinc (FLO)', count: '' },
-          { id: 'w-3', label: 'Row 3: turn, 2ch, hdcinc, 2sc, 2slst (FLO) — fasten off', count: '' },
-          { id: 'w-second', label: '✨ Second wing complete', count: '' },
-        ],
-      },
-      {
-        section: 'Assembly',
-        theme: 'blush',
-        notes: 'Final step — bring your unicorn to life.',
-        rows: [
-          { id: 'a-1', label: 'Sew the head onto the body', count: '' },
-          { id: 'a-2', label: 'Sew the horn on top of the head', count: '' },
-          { id: 'a-3', label: 'Sew the hair along the back of the head', count: '' },
-          { id: 'a-4', label: 'Sew the tail to the back (Rnds 19–20)', count: '' },
-          { id: 'a-5', label: 'Sew both wings on (Rnds 15–16)', count: '' },
-          { id: 'a-6', label: 'Embroider eyes and facial details', count: '' },
-          { id: 'a-7', label: 'Weave in all ends 🎉', count: '' },
-        ],
-      },
-    ],
-  },
+    sections: [{
+      section: 'Head & Body',
+      theme: 'coral',
+      notes: 'Worked in a continuous spiral from the muzzle. Stuff before closing.',
+      rows: [{
+        id: 'hb-start',
+        label: 'Start with 5 ch',
+        count: '(5)'
+      }, {
+        id: 'hb-1',
+        label: 'Rnd 1: ch, 4sc, 3sc in 1 st, 3sc, inc, slst',
+        count: '(12)'
+      }, {
+        id: 'hb-2',
+        label: 'Rnd 2: ch, inc, 3sc, 3inc, 3sc, 2inc, slst',
+        count: '(18)'
+      }, {
+        id: 'hb-3',
+        label: 'Rnd 3: ch, inc, 4sc, [sc, inc] x3, 3sc, [sc, inc] x2, slst',
+        count: '(24)'
+      }, {
+        id: 'hb-4',
+        label: 'Rnd 4: ch, inc, [5ch, skip 1ch, 4sc], 5sc, [inc, 2sc] x3, 3sc, inc, [5ch, skip 1ch, 4sc], 2sc, inc, 2sc',
+        count: '(30+16)'
+      }, {
+        id: 'hb-5',
+        label: 'Rnd 5: ch, 2sc, [3hdc, sc, 2ch, sc, 3hdc], 22sc, [3hdc, sc, 2ch, sc, 3hdc], 6sc',
+        count: '(30+16)'
+      }, {
+        id: 'hb-6',
+        label: 'Rnd 6: ch, sc, inc, [skip the ear], 6sc, [2sc, inc] x3, 7sc, [skip the ear], sc, inc, 2sc, inc, sc, slst',
+        count: '(36)'
+      }, {
+        id: 'hb-7-9',
+        label: 'Rnd 7–9: ch, 36sc, slst',
+        count: '(36)'
+      }, {
+        id: 'hb-10',
+        label: 'Rnd 10: ch, 33sc, dec, sc, slst',
+        count: '(35)'
+      }, {
+        id: 'hb-11',
+        label: 'Rnd 11: ch, 6sc, [sc, dec] x6, 8sc, dec, sc, slst',
+        count: '(28)'
+      }, {
+        id: 'hb-12',
+        label: 'Rnd 12: ch, 3sc, [sc, dec] x6, 5sc, inc, sc, slst',
+        count: '(23)'
+      }, {
+        id: 'hb-13',
+        label: 'Rnd 13: ch, 3sc, 6dec, 5sc, inc, 2sc, slst',
+        count: '(18)'
+      }, {
+        id: 'hb-14',
+        label: 'Rnd 14: ch, 3sc, 3dec, 3sc, [sc, inc] x3, slst',
+        count: '(18)'
+      }, {
+        id: 'hb-15',
+        label: 'Rnd 15: ch, [inc, 5sc] x3, slst',
+        count: '(21)'
+      }, {
+        id: 'hb-16',
+        label: 'Rnd 16: ch, 2sc, 5hdcpuff, inc, 3sc, 5hdcpuff, 2sc, inc, 6sc, inc, 3sc, slst',
+        count: '(24)'
+      }, {
+        id: 'hb-17',
+        label: 'Rnd 17: ch, 3sc, [inc, sc] x4, 13sc, slst',
+        count: '(28)'
+      }, {
+        id: 'hb-18-20',
+        label: 'Rnd 18–20: ch, 28sc, slst',
+        count: '(28)'
+      }, {
+        id: 'hb-stuff',
+        label: '✂️ Stuff with polyester fiber until firmly filled',
+        count: ''
+      }, {
+        id: 'hb-21',
+        label: 'Rnd 21: ch, 3sc, 5hdcpuff, 8sc, 5hdcpuff, 15sc, slst',
+        count: '(28)'
+      }, {
+        id: 'hb-22',
+        label: 'Rnd 22: ch, [dec, 5sc] x7, slst',
+        count: '(21)'
+      }, {
+        id: 'hb-23',
+        label: 'Rnd 23: ch, [sc, dec] x7, slst',
+        count: '(14)'
+      }, {
+        id: 'hb-24',
+        label: 'Rnd 24: ch, 7dec, slst — fasten off',
+        count: '(7)'
+      }]
+    }, {
+      section: 'Tail',
+      theme: 'plum',
+      notes: 'Start with 6 sc in a magic ring, slst.',
+      rows: [{
+        id: 't-1',
+        label: 'Rnd 1: 2ch, [3hdcpuff] x6, slst',
+        count: ''
+      }, {
+        id: 't-2',
+        label: 'Rnd 2: ch, 6dec, slst — fasten off',
+        count: ''
+      }]
+    }, {
+      section: 'Hair (Mane)',
+      theme: 'sky',
+      notes: 'Start with 25 ch.',
+      rows: [{
+        id: 'h-1',
+        label: 'Row 1: skip 1 ch, 24sc — fasten off',
+        count: ''
+      }]
+    }, {
+      section: 'Horn',
+      theme: 'butter',
+      notes: 'Start with 4 sc in a magic ring.',
+      rows: [{
+        id: 'horn-1',
+        label: 'Rnd 1: [sc, inc] x2',
+        count: ''
+      }, {
+        id: 'horn-2',
+        label: 'Rnd 2: 6sc',
+        count: ''
+      }, {
+        id: 'horn-3',
+        label: 'Rnd 3: [2sc, inc] x2',
+        count: ''
+      }, {
+        id: 'horn-4',
+        label: 'Rnd 4: 8sc',
+        count: ''
+      }, {
+        id: 'horn-5',
+        label: 'Rnd 5: [3sc, inc] x10 — fasten off',
+        count: ''
+      }]
+    }, {
+      section: 'Wings (make 2)',
+      theme: 'sage',
+      notes: 'Start with 6 ch.',
+      rows: [{
+        id: 'w-1',
+        label: 'Row 1: skip 2 ch, hdc, 2sc, slst',
+        count: ''
+      }, {
+        id: 'w-2',
+        label: 'Row 2: turn, ch, 3sc, hdcinc (FLO)',
+        count: ''
+      }, {
+        id: 'w-3',
+        label: 'Row 3: turn, 2ch, hdcinc, 2sc, 2slst (FLO) — fasten off',
+        count: ''
+      }, {
+        id: 'w-second',
+        label: '✨ Second wing complete',
+        count: ''
+      }]
+    }, {
+      section: 'Assembly',
+      theme: 'blush',
+      notes: 'Final step — bring your unicorn to life.',
+      rows: [{
+        id: 'a-1',
+        label: 'Sew the head onto the body',
+        count: ''
+      }, {
+        id: 'a-2',
+        label: 'Sew the horn on top of the head',
+        count: ''
+      }, {
+        id: 'a-3',
+        label: 'Sew the hair along the back of the head',
+        count: ''
+      }, {
+        id: 'a-4',
+        label: 'Sew the tail to the back (Rnds 19–20)',
+        count: ''
+      }, {
+        id: 'a-5',
+        label: 'Sew both wings on (Rnds 15–16)',
+        count: ''
+      }, {
+        id: 'a-6',
+        label: 'Embroider eyes and facial details',
+        count: ''
+      }, {
+        id: 'a-7',
+        label: 'Weave in all ends 🎉',
+        count: ''
+      }]
+    }]
+  }
 };
 
 // Theme palette mapped to the new brand colors
 const THEMES = {
-  teal:   { bg: 'bg-teal-soft/40',   border: 'border-teal/40',   text: 'text-teal-deep',   bar: 'bg-teal'   },
-  coral:  { bg: 'bg-coral-soft/40',  border: 'border-coral/40',  text: 'text-coral-deep',  bar: 'bg-coral'  },
-  butter: { bg: 'bg-butter-soft/40', border: 'border-butter/40', text: 'text-butter-deep', bar: 'bg-butter' },
-  sage:   { bg: 'bg-sage-soft/40',   border: 'border-sage/40',   text: 'text-sage-deep',   bar: 'bg-sage'   },
-  sky:    { bg: 'bg-sky-soft/40',    border: 'border-sky/40',    text: 'text-sky-deep',    bar: 'bg-sky'    },
-  plum:   { bg: 'bg-plum-soft/40',   border: 'border-plum/40',   text: 'text-plum-deep',   bar: 'bg-plum'   },
-  blush:  { bg: 'bg-blush-soft/40',  border: 'border-blush/40',  text: 'text-blush-deep',  bar: 'bg-blush'  },
+  teal: {
+    bg: 'bg-teal-soft/40',
+    border: 'border-teal/40',
+    text: 'text-teal-deep',
+    bar: 'bg-teal'
+  },
+  coral: {
+    bg: 'bg-coral-soft/40',
+    border: 'border-coral/40',
+    text: 'text-coral-deep',
+    bar: 'bg-coral'
+  },
+  butter: {
+    bg: 'bg-butter-soft/40',
+    border: 'border-butter/40',
+    text: 'text-butter-deep',
+    bar: 'bg-butter'
+  },
+  sage: {
+    bg: 'bg-sage-soft/40',
+    border: 'border-sage/40',
+    text: 'text-sage-deep',
+    bar: 'bg-sage'
+  },
+  sky: {
+    bg: 'bg-sky-soft/40',
+    border: 'border-sky/40',
+    text: 'text-sky-deep',
+    bar: 'bg-sky'
+  },
+  plum: {
+    bg: 'bg-plum-soft/40',
+    border: 'border-plum/40',
+    text: 'text-plum-deep',
+    bar: 'bg-plum'
+  },
+  blush: {
+    bg: 'bg-blush-soft/40',
+    border: 'border-blush/40',
+    text: 'text-blush-deep',
+    bar: 'bg-blush'
+  }
 };
 const THEME_ORDER = ['teal', 'coral', 'butter', 'sage', 'sky', 'plum', 'blush'];
 
 // ============================================================
 //   STORAGE
 // ============================================================
-const PROGRESS_KEY = (id) => `tracker-progress:${id}`;
+const PROGRESS_KEY = id => `tracker-progress:${id}`;
 const USER_PATTERNS_KEY = 'tracker-user-patterns';
-
 function loadProgress(id) {
-  try { const s = localStorage.getItem(PROGRESS_KEY(id)); return s ? JSON.parse(s) : {}; }
-  catch (e) { return {}; }
+  try {
+    const s = localStorage.getItem(PROGRESS_KEY(id));
+    return s ? JSON.parse(s) : {};
+  } catch (e) {
+    return {};
+  }
 }
 function saveProgress(id, checked) {
-  try { localStorage.setItem(PROGRESS_KEY(id), JSON.stringify(checked)); }
-  catch (e) { console.error('Save failed:', e); }
+  try {
+    localStorage.setItem(PROGRESS_KEY(id), JSON.stringify(checked));
+  } catch (e) {
+    console.error('Save failed:', e);
+  }
 }
 function loadUserPatterns() {
-  try { const s = localStorage.getItem(USER_PATTERNS_KEY); return s ? JSON.parse(s) : {}; }
-  catch (e) { return {}; }
+  try {
+    const s = localStorage.getItem(USER_PATTERNS_KEY);
+    return s ? JSON.parse(s) : {};
+  } catch (e) {
+    return {};
+  }
 }
 function saveUserPatterns(p) {
-  try { localStorage.setItem(USER_PATTERNS_KEY, JSON.stringify(p)); }
-  catch (e) { console.error('Save user patterns failed:', e); }
+  try {
+    localStorage.setItem(USER_PATTERNS_KEY, JSON.stringify(p));
+  } catch (e) {
+    console.error('Save user patterns failed:', e);
+  }
 }
 
 // ============================================================
 //   PARSER
 // ============================================================
 function parsePatternText(text) {
-  const lines = text.split('\n').map((l) => l.trim()).filter((l) => l.length > 0);
+  const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
   const sections = [];
   let currentSection = null;
   let rowIdCounter = 0;
-
   const rowRegex = /^(rnd|round|row)\s*\.?\s*(\d+(?:\s*[\-–]\s*\d+)?)\s*[:\-–.]?\s*(.+)$/i;
   const countRegex = /\(([\d+\-\s]+)\)\s*$/;
   const startRegex = /^(start(?:s|ing)?\s+with|begin\s+with|chain)\s+/i;
-
   const ensureSection = () => {
     if (!currentSection) {
-      currentSection = { section: 'Pattern', theme: THEME_ORDER[sections.length % THEME_ORDER.length], notes: '', rows: [] };
+      currentSection = {
+        section: 'Pattern',
+        theme: THEME_ORDER[sections.length % THEME_ORDER.length],
+        notes: '',
+        rows: []
+      };
       sections.push(currentSection);
     }
     return currentSection;
@@ -228,16 +396,27 @@ function parsePatternText(text) {
   const addRow = (label, count = '') => {
     const sec = ensureSection();
     rowIdCounter += 1;
-    sec.rows.push({ id: `r-${rowIdCounter}`, label: label.trim(), count: count ? `(${count})` : '' });
+    sec.rows.push({
+      id: `r-${rowIdCounter}`,
+      label: label.trim(),
+      count: count ? `(${count})` : ''
+    });
   };
-  const startNewSection = (name) => {
-    currentSection = { section: name.trim(), theme: THEME_ORDER[sections.length % THEME_ORDER.length], notes: '', rows: [] };
+  const startNewSection = name => {
+    currentSection = {
+      section: name.trim(),
+      theme: THEME_ORDER[sections.length % THEME_ORDER.length],
+      notes: '',
+      rows: []
+    };
     sections.push(currentSection);
   };
-
   for (const line of lines) {
     if (/^(abbreviations?|notes?|materials?|gauge)\s*:?\s*$/i.test(line)) continue;
-    if (line.startsWith('#')) { startNewSection(line.replace(/^#+\s*/, '')); continue; }
+    if (line.startsWith('#')) {
+      startNewSection(line.replace(/^#+\s*/, ''));
+      continue;
+    }
     const rowMatch = line.match(rowRegex);
     if (rowMatch) {
       const [, kind, num, rest] = rowMatch;
@@ -245,19 +424,25 @@ function parsePatternText(text) {
       let label = `${kind.charAt(0).toUpperCase() + kind.slice(1).toLowerCase()} ${num}: `;
       let instruction = rest;
       let count = '';
-      if (countMatch) { count = countMatch[1].trim(); instruction = rest.replace(countRegex, '').trim(); }
+      if (countMatch) {
+        count = countMatch[1].trim();
+        instruction = rest.replace(countRegex, '').trim();
+      }
       label += instruction;
       addRow(label, count);
       continue;
     }
-    if (startRegex.test(line)) { addRow(line); continue; }
-    if (/^[A-Z][\w\s()&\-]{0,40}:?$/.test(line) && line.split(/\s+/).length <= 4) {
+    if (startRegex.test(line)) {
+      addRow(line);
+      continue;
+    }
+    if (/^[A-Z][\w\s()&\-]{0,40}:$/.test(line) && line.split(/\s+/).length <= 5) {
       startNewSection(line.replace(/:$/, ''));
       continue;
     }
     if (line.length > 0) addRow(line);
   }
-  return sections.filter((s) => s.rows.length > 0);
+  return sections.filter(s => s.rows.length > 0);
 }
 
 // ============================================================
@@ -272,147 +457,111 @@ function useHashRoute() {
   }, []);
   return route;
 }
-const navigate = (path) => { window.location.hash = '#/' + path; };
-
-// ============================================================
-//   DECORATIVE COMPONENTS
-// ============================================================
-
-) {
-  return (
-    <svg
-      viewBox="0 0 80 40"
-      className={className}
-      style={{ transform: flip ? 'scaleX(-1)' : 'none' }}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.2"
-      strokeLinecap="round"
-    >
-      <path d="M5 20 Q 30 18, 75 20" opacity="0.7" />
-      <path d="M20 20 Q 18 12, 22 8" opacity="0.7" />
-      <path d="M30 20 Q 32 11, 36 8" opacity="0.7" />
-      <path d="M42 20 Q 40 13, 44 9" opacity="0.7" />
-      <path d="M54 20 Q 56 12, 60 9" opacity="0.7" />
-      <ellipse cx="22" cy="9" rx="4" ry="2.5" opacity="0.5" />
-      <ellipse cx="36" cy="9" rx="4" ry="2.5" opacity="0.5" />
-      <ellipse cx="44" cy="10" rx="3.5" ry="2.2" opacity="0.5" />
-      <ellipse cx="60" cy="10" rx="4" ry="2.5" opacity="0.5" />
-    </svg>
-  );
-}
-
-) {
-  return (
-    <svg viewBox="0 0 40 40" className={className} fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
-      <circle cx="20" cy="22" r="14" opacity="0.8" />
-      <path d="M8 18 Q 20 12, 32 22" opacity="0.5" />
-      <path d="M9 26 Q 20 22, 31 30" opacity="0.5" />
-      <path d="M14 12 Q 22 20, 26 34" opacity="0.5" />
-      <path d="M28 12 Q 18 22, 14 34" opacity="0.5" />
-      <path d="M20 4 Q 19 8, 22 11" opacity="0.7" />
-    </svg>
-  );
-}
-
+const navigate = path => {
+  window.location.hash = '#/' + path;
+};
 const LOGO_SRC = "data:image/webp;base64,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";
 
 // Brand header — appears at top of every page
-function BrandHeader({ small = false }) {
-  return (
-    <div className={`text-center ${small ? 'mb-6 pt-4' : 'mb-8 pt-6'}`}>
-      <img
-        src={LOGO_SRC}
-        alt="ami-go-round"
-        className={`mx-auto ${small ? 'w-24 h-24' : 'w-44 h-44 sm:w-52 sm:h-52'}`}
-      />
-      <h1 className={`font-serif font-normal tracking-tight text-ink mt-1 ${small ? 'text-2xl' : 'text-4xl sm:text-5xl'}`}>
-        ami-go-round
-      </h1>
-      <p className={`font-script text-teal-deep mt-1 ${small ? 'text-lg' : 'text-2xl sm:text-3xl'}`}>
-        deliberate craft. endless play.
-      </p>
-    </div>
-  );
+function BrandHeader({
+  small = false
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    className: `text-center ${small ? 'mb-6 pt-4' : 'mb-8 pt-6'}`
+  }, /*#__PURE__*/React.createElement("img", {
+    src: LOGO_SRC,
+    alt: "ami-go-round",
+    className: `mx-auto ${small ? 'w-24 h-24' : 'w-44 h-44 sm:w-52 sm:h-52'}`
+  }), /*#__PURE__*/React.createElement("h1", {
+    className: `font-serif font-normal tracking-tight text-ink mt-1 ${small ? 'text-2xl' : 'text-4xl sm:text-5xl'}`
+  }, "ami-go-round"), /*#__PURE__*/React.createElement("p", {
+    className: `font-script text-teal-deep mt-1 ${small ? 'text-lg' : 'text-2xl sm:text-3xl'}`
+  }, "deliberate craft. endless play."));
 }
 
 // ============================================================
 //   HOME PAGE
 // ============================================================
-function HomePage({ allPatterns, onDelete }) {
+function HomePage({
+  allPatterns,
+  onDelete
+}) {
   const projects = Object.values(allPatterns);
-
-  return (
-    <div className="min-h-screen p-4 pb-12">
-      <div className="max-w-2xl mx-auto">
-        <BrandHeader />
-
-        <div className="flex items-center gap-3 mb-4">
-          <h2 className="font-script text-3xl text-ink">my projects</h2>
-          <div className="flex-1 border-b border-dashed border-ink/20" />
-          <span className="font-sans text-xs text-ink/50">
-            {projects.length} project{projects.length === 1 ? '' : 's'}
-          </span>
-        </div>
-
-        <div className="space-y-3">
-          {projects.map((p) => {
-            const total = p.sections.reduce((s, sec) => s + sec.rows.length, 0);
-            const ck = loadProgress(p.id);
-            const done = Object.keys(ck).filter((k) => ck[k]).length;
-            const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-            const isDone = pct === 100;
-            return (
-              <div key={p.id} className="bg-cream rounded-2xl shadow-sm hover:shadow-md transition p-5 border border-ink/10">
-                <button onClick={() => navigate(p.id)} className="w-full text-left">
-                  <div className="flex items-start gap-4">
-                    <div className="text-4xl flex-shrink-0">{p.emoji}</div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-baseline justify-between gap-2 mb-1">
-                        <h3 className="font-serif font-medium text-lg text-ink truncate">{p.title}</h3>
-                        {isDone && <span className="font-script text-sage-deep text-lg">done ✓</span>}
-                      </div>
-                      {p.blurb && <p className="font-sans text-xs text-ink/60 mb-2">{p.blurb}</p>}
-                      <div className="w-full bg-paper rounded-full h-2 overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-teal via-butter to-coral transition-all"
-                          style={{ width: `${pct}%` }}
-                        />
-                      </div>
-                      <div className="font-sans text-xs text-ink/50 mt-1">
-                        {done} / {total} steps · {pct}%
-                      </div>
-                    </div>
-                  </div>
-                </button>
-                {p.userCreated && (
-                  <div className="mt-3 pt-3 border-t border-ink/10 flex justify-end">
-                    <button
-                      onClick={() => onDelete(p.id)}
-                      className="font-sans text-xs text-ink/40 hover:text-coral-deep"
-                    >
-                      delete project
-                    </button>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        <button
-          onClick={() => navigate('builder')}
-          className="mt-6 w-full bg-gradient-to-r from-teal via-sage to-butter text-white font-serif text-lg rounded-2xl p-5 shadow-md hover:shadow-lg transition relative overflow-hidden"
-        >
-          <span className="relative z-10">+ add a new pattern</span>
-        </button>
-
-        <p className="font-script text-center text-ink/40 mt-8 text-lg">
-          progress saved to this device, always
-        </p>
-      </div>
-    </div>
-  );
+  const [pendingDelete, setPendingDelete] = useState(null);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "min-h-screen p-4 pb-12"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "max-w-2xl mx-auto"
+  }, /*#__PURE__*/React.createElement(BrandHeader, null), /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-3 mb-4"
+  }, /*#__PURE__*/React.createElement("h2", {
+    className: "font-script text-3xl text-ink"
+  }, "my projects"), /*#__PURE__*/React.createElement("div", {
+    className: "flex-1 border-b border-dashed border-ink/20"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "font-sans text-xs text-ink/50"
+  }, projects.length, " project", projects.length === 1 ? '' : 's')), /*#__PURE__*/React.createElement("div", {
+    className: "space-y-3"
+  }, projects.map(p => {
+    const total = p.sections.reduce((s, sec) => s + sec.rows.length, 0);
+    const ck = loadProgress(p.id);
+    const done = Object.keys(ck).filter(k => ck[k]).length;
+    const pct = total > 0 ? Math.round(done / total * 100) : 0;
+    const isDone = pct === 100;
+    return /*#__PURE__*/React.createElement("div", {
+      key: p.id,
+      className: "bg-cream rounded-2xl shadow-sm hover:shadow-md transition p-5 border border-ink/10"
+    }, /*#__PURE__*/React.createElement("button", {
+      onClick: () => navigate(p.id),
+      className: "w-full text-left"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "flex items-start gap-4"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "text-4xl flex-shrink-0"
+    }, p.emoji), /*#__PURE__*/React.createElement("div", {
+      className: "flex-1 min-w-0"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "flex items-baseline justify-between gap-2 mb-1"
+    }, /*#__PURE__*/React.createElement("h3", {
+      className: "font-serif font-medium text-lg text-ink truncate"
+    }, p.title), isDone && /*#__PURE__*/React.createElement("span", {
+      className: "font-script text-sage-deep text-lg"
+    }, "done \u2713")), p.blurb && /*#__PURE__*/React.createElement("p", {
+      className: "font-sans text-xs text-ink/60 mb-2"
+    }, p.blurb), /*#__PURE__*/React.createElement("div", {
+      className: "w-full bg-paper rounded-full h-2 overflow-hidden"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "h-full bg-gradient-to-r from-teal via-butter to-coral transition-all",
+      style: {
+        width: `${pct}%`
+      }
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "font-sans text-xs text-ink/50 mt-1"
+    }, done, " / ", total, " steps \xB7 ", pct, "%")))), p.userCreated && /*#__PURE__*/React.createElement("div", {
+      className: "mt-3 pt-3 border-t border-ink/10 flex justify-end items-center gap-2"
+    }, pendingDelete === p.id ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
+      className: "font-sans text-xs text-ink/60"
+    }, "delete this project?"), /*#__PURE__*/React.createElement("button", {
+      onClick: () => {
+        onDelete(p.id);
+        setPendingDelete(null);
+      },
+      className: "font-sans text-xs text-coral-deep font-semibold"
+    }, "yes, delete"), /*#__PURE__*/React.createElement("button", {
+      onClick: () => setPendingDelete(null),
+      className: "font-sans text-xs text-ink/40"
+    }, "cancel")) : /*#__PURE__*/React.createElement("button", {
+      onClick: () => setPendingDelete(p.id),
+      className: "font-sans text-xs text-ink/40 hover:text-coral-deep"
+    }, "delete project")));
+  })), /*#__PURE__*/React.createElement("button", {
+    onClick: () => navigate('builder'),
+    className: "mt-6 w-full bg-gradient-to-r from-teal via-sage to-butter text-white font-serif text-lg rounded-2xl p-5 shadow-md hover:shadow-lg transition relative overflow-hidden"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "relative z-10"
+  }, "+ add a new pattern")), /*#__PURE__*/React.createElement("p", {
+    className: "font-script text-center text-ink/40 mt-8 text-lg"
+  }, "progress saved to this device, always")));
 }
 
 // ============================================================
@@ -438,24 +587,20 @@ Rnd 3: 12 sc (12) - fasten off
 Sew ears to top of head
 Embroider eyes
 Weave in all ends`;
-
-function BuilderPage({ onSave }) {
+function BuilderPage({
+  onSave
+}) {
   const [title, setTitle] = useState('');
   const [emoji, setEmoji] = useState('🧶');
   const [blurb, setBlurb] = useState('');
   const [videoUrl, setVideoUrl] = useState('');
   const [rawText, setRawText] = useState('');
-
   const parsedSections = useMemo(() => parsePatternText(rawText), [rawText]);
   const totalRows = parsedSections.reduce((s, sec) => s + sec.rows.length, 0);
   const canSave = title.trim().length > 0 && totalRows > 0;
-
   const handleSave = () => {
     if (!canSave) return;
-    const id =
-      'user-' +
-      title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 30) +
-      '-' + Math.random().toString(36).slice(2, 6);
+    const id = 'user-' + title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 30) + '-' + Math.random().toString(36).slice(2, 6);
     onSave({
       id,
       title: title.trim(),
@@ -463,314 +608,253 @@ function BuilderPage({ onSave }) {
       blurb: blurb.trim(),
       videoUrl: videoUrl.trim(),
       sections: parsedSections,
-      userCreated: true,
+      userCreated: true
     });
     navigate(id);
   };
-
-  return (
-    <div className="min-h-screen p-4 pb-24">
-      <div className="max-w-2xl mx-auto">
-        <button
-          onClick={() => navigate('')}
-          className="font-script text-xl text-teal-deep hover:text-teal mb-2 mt-2 inline-flex items-center gap-1"
-        >
-          ← all projects
-        </button>
-
-        <BrandHeader small />
-
-        <div className="text-center mb-6">
-          <h2 className="font-serif text-3xl text-ink">add a new pattern</h2>
-          <p className="font-script text-xl text-coral-deep mt-1">
-            paste a pattern, get a tracker
-          </p>
-        </div>
-
-        {/* Project metadata */}
-        <div className="bg-cream rounded-2xl shadow-sm p-5 mb-4 border border-ink/10">
-          <h3 className="font-script text-2xl text-teal-deep mb-3">project details</h3>
-
-          <div className="grid grid-cols-[80px_1fr] gap-3 mb-3">
-            <div>
-              <label className="font-sans text-xs text-ink/60">Emoji</label>
-              <input
-                type="text"
-                maxLength="4"
-                value={emoji}
-                onChange={(e) => setEmoji(e.target.value)}
-                className="w-full mt-1 px-3 py-2 bg-paper border border-ink/20 rounded-lg text-center text-2xl focus:outline-none focus:border-teal"
-              />
-            </div>
-            <div>
-              <label className="font-sans text-xs text-ink/60">Title *</label>
-              <input
-                type="text"
-                value={title}
-                placeholder="e.g. Friendly Dragon"
-                onChange={(e) => setTitle(e.target.value)}
-                className="w-full mt-1 px-3 py-2 bg-paper border border-ink/20 rounded-lg font-serif focus:outline-none focus:border-teal"
-              />
-            </div>
-          </div>
-
-          <div className="mb-3">
-            <label className="font-sans text-xs text-ink/60">Short description (optional)</label>
-            <input
-              type="text"
-              value={blurb}
-              placeholder="e.g. Brave little dragon, ~5 inches tall"
-              onChange={(e) => setBlurb(e.target.value)}
-              className="w-full mt-1 px-3 py-2 bg-paper border border-ink/20 rounded-lg focus:outline-none focus:border-teal"
-            />
-          </div>
-
-          <div>
-            <label className="font-sans text-xs text-ink/60">Video URL (optional)</label>
-            <input
-              type="url"
-              value={videoUrl}
-              placeholder="https://www.youtube.com/watch?v=..."
-              onChange={(e) => setVideoUrl(e.target.value)}
-              className="w-full mt-1 px-3 py-2 bg-paper border border-ink/20 rounded-lg font-sans text-sm focus:outline-none focus:border-teal"
-            />
-          </div>
-        </div>
-
-        {/* Pattern text */}
-        <div className="bg-cream rounded-2xl shadow-sm p-5 mb-4 border border-ink/10">
-          <div className="flex justify-between items-center mb-3">
-            <h3 className="font-script text-2xl text-teal-deep">paste the pattern</h3>
-            <button
-              onClick={() => setRawText(EXAMPLE_PATTERN_TEXT)}
-              className="font-sans text-xs text-coral-deep hover:text-coral underline"
-            >
-              try an example
-            </button>
-          </div>
-
-          <p className="font-sans text-xs text-ink/60 mb-2">
-            Use <code className="bg-paper px-1 rounded">#</code> before a section name (e.g.{' '}
-            <code className="bg-paper px-1 rounded"># Body</code>). Lines starting with "Rnd",
-            "Round", or "Row" become trackable rows.
-          </p>
-
-          <textarea
-            value={rawText}
-            onChange={(e) => setRawText(e.target.value)}
-            placeholder="# Body&#10;Rnd 1: 6 sc in magic ring (6)&#10;Rnd 2: inc x6 (12)..."
-            className="w-full h-64 px-3 py-2 bg-paper border border-ink/20 rounded-lg font-mono text-sm focus:outline-none focus:border-teal"
-          />
-        </div>
-
-        {/* Preview */}
-        {parsedSections.length > 0 && (
-          <div className="bg-cream rounded-2xl shadow-sm p-5 mb-4 border border-ink/10">
-            <div className="flex justify-between items-center mb-3">
-              <h3 className="font-script text-2xl text-teal-deep">preview</h3>
-              <span className="font-sans text-xs text-ink/60">
-                {parsedSections.length} section{parsedSections.length === 1 ? '' : 's'} · {totalRows} row{totalRows === 1 ? '' : 's'}
-              </span>
-            </div>
-            <div className="space-y-3">
-              {parsedSections.map((sec, i) => {
-                const theme = THEMES[sec.theme];
-                return (
-                  <div key={i} className={`${theme.bg} ${theme.border} border rounded-lg p-3`}>
-                    <h4 className={`font-serif font-medium ${theme.text} mb-1`}>{sec.section}</h4>
-                    <ul className="font-sans text-xs text-ink/70 space-y-0.5">
-                      {sec.rows.slice(0, 3).map((r) => (
-                        <li key={r.id} className="truncate">
-                          • {r.label}{' '}
-                          {r.count && <span className={`${theme.text} font-semibold`}>{r.count}</span>}
-                        </li>
-                      ))}
-                      {sec.rows.length > 3 && (
-                        <li className="text-ink/40 italic">+ {sec.rows.length - 3} more</li>
-                      )}
-                    </ul>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        <button
-          onClick={handleSave}
-          disabled={!canSave}
-          className={`w-full font-serif text-lg rounded-2xl p-4 shadow-md transition ${
-            canSave
-              ? 'bg-gradient-to-r from-teal via-sage to-butter text-white hover:shadow-lg'
-              : 'bg-paper text-ink/30 cursor-not-allowed'
-          }`}
-        >
-          {canSave ? '✓ save and start tracking' : 'add a title and pattern to save'}
-        </button>
-      </div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "min-h-screen p-4 pb-24"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "max-w-2xl mx-auto"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => navigate(''),
+    className: "font-script text-xl text-teal-deep hover:text-teal mb-2 mt-2 inline-flex items-center gap-1"
+  }, "\u2190 all projects"), /*#__PURE__*/React.createElement(BrandHeader, {
+    small: true
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "text-center mb-6"
+  }, /*#__PURE__*/React.createElement("h2", {
+    className: "font-serif text-3xl text-ink"
+  }, "add a new pattern"), /*#__PURE__*/React.createElement("p", {
+    className: "font-script text-xl text-coral-deep mt-1"
+  }, "paste a pattern, get a tracker")), /*#__PURE__*/React.createElement("div", {
+    className: "bg-cream rounded-2xl shadow-sm p-5 mb-4 border border-ink/10"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "font-script text-2xl text-teal-deep mb-3"
+  }, "project details"), /*#__PURE__*/React.createElement("div", {
+    className: "grid grid-cols-[80px_1fr] gap-3 mb-3"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    className: "font-sans text-xs text-ink/60"
+  }, "Emoji"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    maxLength: "4",
+    value: emoji,
+    onChange: e => setEmoji(e.target.value),
+    className: "w-full mt-1 px-3 py-2 bg-paper border border-ink/20 rounded-lg text-center text-2xl focus:outline-none focus:border-teal"
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    className: "font-sans text-xs text-ink/60"
+  }, "Title *"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    value: title,
+    placeholder: "e.g. Friendly Dragon",
+    onChange: e => setTitle(e.target.value),
+    className: "w-full mt-1 px-3 py-2 bg-paper border border-ink/20 rounded-lg font-serif focus:outline-none focus:border-teal"
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "mb-3"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "font-sans text-xs text-ink/60"
+  }, "Short description (optional)"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    value: blurb,
+    placeholder: "e.g. Brave little dragon, ~5 inches tall",
+    onChange: e => setBlurb(e.target.value),
+    className: "w-full mt-1 px-3 py-2 bg-paper border border-ink/20 rounded-lg focus:outline-none focus:border-teal"
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    className: "font-sans text-xs text-ink/60"
+  }, "Video URL (optional)"), /*#__PURE__*/React.createElement("input", {
+    type: "url",
+    value: videoUrl,
+    placeholder: "https://www.youtube.com/watch?v=...",
+    onChange: e => setVideoUrl(e.target.value),
+    className: "w-full mt-1 px-3 py-2 bg-paper border border-ink/20 rounded-lg font-sans text-sm focus:outline-none focus:border-teal"
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "bg-cream rounded-2xl shadow-sm p-5 mb-4 border border-ink/10"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex justify-between items-center mb-3"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "font-script text-2xl text-teal-deep"
+  }, "paste the pattern"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setRawText(EXAMPLE_PATTERN_TEXT),
+    className: "font-sans text-xs text-coral-deep hover:text-coral underline"
+  }, "try an example")), /*#__PURE__*/React.createElement("p", {
+    className: "font-sans text-xs text-ink/60 mb-2"
+  }, "Use ", /*#__PURE__*/React.createElement("code", {
+    className: "bg-paper px-1 rounded"
+  }, "#"), " before a section name (e.g.", ' ', /*#__PURE__*/React.createElement("code", {
+    className: "bg-paper px-1 rounded"
+  }, "# Body"), "). Lines starting with \"Rnd\", \"Round\", or \"Row\" become trackable rows."), /*#__PURE__*/React.createElement("textarea", {
+    value: rawText,
+    onChange: e => setRawText(e.target.value),
+    placeholder: "# Body\nRnd 1: 6 sc in magic ring (6)\nRnd 2: inc x6 (12)...",
+    className: "w-full h-64 px-3 py-2 bg-paper border border-ink/20 rounded-lg font-mono text-sm focus:outline-none focus:border-teal"
+  })), parsedSections.length > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "bg-cream rounded-2xl shadow-sm p-5 mb-4 border border-ink/10"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex justify-between items-center mb-3"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "font-script text-2xl text-teal-deep"
+  }, "preview"), /*#__PURE__*/React.createElement("span", {
+    className: "font-sans text-xs text-ink/60"
+  }, parsedSections.length, " section", parsedSections.length === 1 ? '' : 's', " \xB7 ", totalRows, " row", totalRows === 1 ? '' : 's')), /*#__PURE__*/React.createElement("div", {
+    className: "space-y-3"
+  }, parsedSections.map((sec, i) => {
+    const theme = THEMES[sec.theme];
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      className: `${theme.bg} ${theme.border} border rounded-lg p-3`
+    }, /*#__PURE__*/React.createElement("h4", {
+      className: `font-serif font-medium ${theme.text} mb-1`
+    }, sec.section), /*#__PURE__*/React.createElement("ul", {
+      className: "font-sans text-xs text-ink/70 space-y-0.5"
+    }, sec.rows.slice(0, 3).map(r => /*#__PURE__*/React.createElement("li", {
+      key: r.id,
+      className: "truncate"
+    }, "\u2022 ", r.label, ' ', r.count && /*#__PURE__*/React.createElement("span", {
+      className: `${theme.text} font-semibold`
+    }, r.count))), sec.rows.length > 3 && /*#__PURE__*/React.createElement("li", {
+      className: "text-ink/40 italic"
+    }, "+ ", sec.rows.length - 3, " more")));
+  }))), /*#__PURE__*/React.createElement("button", {
+    onClick: handleSave,
+    disabled: !canSave,
+    className: `w-full font-serif text-lg rounded-2xl p-4 shadow-md transition ${canSave ? 'bg-gradient-to-r from-teal via-sage to-butter text-white hover:shadow-lg' : 'bg-paper text-ink/30 cursor-not-allowed'}`
+  }, canSave ? '✓ save and start tracking' : 'add a title and pattern to save')));
 }
 
 // ============================================================
 //   TRACKER PAGE
 // ============================================================
-function TrackerPage({ pattern }) {
+function TrackerPage({
+  pattern
+}) {
   const [checked, setChecked] = useState(() => loadProgress(pattern.id));
-
-  useEffect(() => { saveProgress(pattern.id, checked); }, [checked, pattern.id]);
-
-  const toggle = (id) => {
-    setChecked((prev) => {
-      const next = { ...prev, [id]: !prev[id] };
+  const [confirmReset, setConfirmReset] = useState(false);
+  useEffect(() => {
+    saveProgress(pattern.id, checked);
+  }, [checked, pattern.id]);
+  const toggle = id => {
+    setChecked(prev => {
+      const next = {
+        ...prev,
+        [id]: !prev[id]
+      };
       if (!next[id]) delete next[id];
       return next;
     });
   };
   const reset = () => {
-    if (window.confirm('Reset all progress for this project?')) setChecked({});
+    setChecked({});
+    setConfirmReset(false);
   };
-
   const totalRows = pattern.sections.reduce((s, sec) => s + sec.rows.length, 0);
-  const completedRows = Object.keys(checked).filter((k) => checked[k]).length;
-  const overallPct = totalRows > 0 ? Math.round((completedRows / totalRows) * 100) : 0;
-
-  return (
-    <div className="min-h-screen p-4 pb-24">
-      <div className="max-w-2xl mx-auto">
-        <button
-          onClick={() => navigate('')}
-          className="font-script text-xl text-teal-deep hover:text-teal mb-2 mt-2 inline-flex items-center gap-1"
-        >
-          ← all projects
-        </button>
-
-        <BrandHeader small />
-
-        <div className="text-center mb-6">
-          <div className="text-5xl mb-1">{pattern.emoji}</div>
-          <h2 className="font-serif text-3xl text-ink">{pattern.title}</h2>
-          {pattern.blurb && <p className="font-sans text-sm text-ink/60 mt-1">{pattern.blurb}</p>}
-          {pattern.videoUrl && (
-            <a
-              href={pattern.videoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block font-script text-lg text-coral-deep hover:text-coral mt-1"
-            >
-              video tutorial ↗
-            </a>
-          )}
-        </div>
-
-        <div className="bg-cream rounded-2xl shadow-sm p-4 mb-6 border border-ink/10">
-          <div className="flex justify-between items-center mb-2">
-            <span className="font-script text-xl text-ink">overall progress</span>
-            <span className="font-serif text-lg text-teal-deep">{completedRows} / {totalRows}</span>
-          </div>
-          <div className="w-full bg-paper rounded-full h-3 overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-teal via-butter to-coral transition-all duration-300"
-              style={{ width: `${overallPct}%` }}
-            />
-          </div>
-          <div className="flex justify-between items-center mt-3">
-            <span className="font-sans text-sm text-ink/60">{overallPct}% complete</span>
-            <button onClick={reset} className="font-sans text-xs text-ink/40 hover:text-coral-deep">
-              ↻ reset
-            </button>
-          </div>
-        </div>
-
-        {pattern.sections.map((section, sIdx) => {
-          const theme = THEMES[section.theme] || THEMES.teal;
-          const sectionDone = section.rows.filter((r) => checked[r.id]).length;
-          const sectionPct = Math.round((sectionDone / section.rows.length) * 100);
-          const isComplete = sectionDone === section.rows.length;
-
-          return (
-            <div
-              key={sIdx}
-              className={`${theme.bg} ${theme.border} border-2 rounded-2xl p-4 mb-4 shadow-sm`}
-            >
-              <div className="flex justify-between items-start mb-2">
-                <div>
-                  <h3 className={`font-script text-3xl ${theme.text} flex items-center gap-2 leading-none`}>
-                    {section.section}
-                    {isComplete && <span className="text-sage-deep">✓</span>}
-                  </h3>
-                  {section.notes && (
-                    <p className="font-sans text-xs text-ink/60 italic mt-2">{section.notes}</p>
-                  )}
-                </div>
-                <span className={`font-serif text-sm ${theme.text} whitespace-nowrap ml-2`}>
-                  {sectionDone}/{section.rows.length}
-                </span>
-              </div>
-
-              <div className="w-full bg-cream/80 rounded-full h-1.5 mb-3 overflow-hidden">
-                <div
-                  className={`h-full ${theme.bar} transition-all duration-300`}
-                  style={{ width: `${sectionPct}%` }}
-                />
-              </div>
-
-              <div className="space-y-2">
-                {section.rows.map((row) => {
-                  const isChecked = !!checked[row.id];
-                  return (
-                    <button
-                      key={row.id}
-                      onClick={() => toggle(row.id)}
-                      className={`w-full text-left flex items-start gap-3 p-3 rounded-lg transition-all ${
-                        isChecked ? 'bg-cream/70 opacity-60' : 'bg-cream/90 hover:bg-cream shadow-sm'
-                      }`}
-                    >
-                      <div
-                        className={`flex-shrink-0 w-6 h-6 rounded-md border-2 flex items-center justify-center mt-0.5 transition ${
-                          isChecked
-                            ? 'bg-teal-deep border-teal-deep text-white'
-                            : 'bg-cream border-ink/30'
-                        }`}
-                      >
-                        {isChecked && '✓'}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <span
-                          className={`font-sans text-sm ${
-                            isChecked ? 'line-through text-ink/50' : 'text-ink'
-                          }`}
-                        >
-                          {row.label}
-                        </span>
-                        {row.count && (
-                          <span
-                            className={`ml-2 font-serif text-xs font-semibold ${
-                              isChecked ? 'text-ink/40' : theme.text
-                            }`}
-                          >
-                            {row.count}
-                          </span>
-                        )}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
-
-        {overallPct === 100 && (
-          <div className="bg-gradient-to-r from-teal-soft via-butter-soft to-coral-soft rounded-2xl p-6 text-center shadow-md border border-ink/10">
-            <div className="text-5xl mb-2">{pattern.emoji}✨</div>
-            <h2 className="font-serif text-2xl text-ink">you did it</h2>
-            <p className="font-script text-2xl text-teal-deep mt-1">your {pattern.title.toLowerCase()} is complete</p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+  const completedRows = Object.keys(checked).filter(k => checked[k]).length;
+  const overallPct = totalRows > 0 ? Math.round(completedRows / totalRows * 100) : 0;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "min-h-screen p-4 pb-24"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "max-w-2xl mx-auto"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => navigate(''),
+    className: "font-script text-xl text-teal-deep hover:text-teal mb-2 mt-2 inline-flex items-center gap-1"
+  }, "\u2190 all projects"), /*#__PURE__*/React.createElement(BrandHeader, {
+    small: true
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "text-center mb-6"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-5xl mb-1"
+  }, pattern.emoji), /*#__PURE__*/React.createElement("h2", {
+    className: "font-serif text-3xl text-ink"
+  }, pattern.title), pattern.blurb && /*#__PURE__*/React.createElement("p", {
+    className: "font-sans text-sm text-ink/60 mt-1"
+  }, pattern.blurb), pattern.videoUrl && /*#__PURE__*/React.createElement("a", {
+    href: pattern.videoUrl,
+    target: "_blank",
+    rel: "noopener noreferrer",
+    className: "inline-block font-script text-lg text-coral-deep hover:text-coral mt-1"
+  }, "video tutorial \u2197")), /*#__PURE__*/React.createElement("div", {
+    className: "bg-cream rounded-2xl shadow-sm p-4 mb-6 border border-ink/10"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex justify-between items-center mb-2"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "font-script text-xl text-ink"
+  }, "overall progress"), /*#__PURE__*/React.createElement("span", {
+    className: "font-serif text-lg text-teal-deep"
+  }, completedRows, " / ", totalRows)), /*#__PURE__*/React.createElement("div", {
+    className: "w-full bg-paper rounded-full h-3 overflow-hidden"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "h-full bg-gradient-to-r from-teal via-butter to-coral transition-all duration-300",
+    style: {
+      width: `${overallPct}%`
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "flex justify-between items-center mt-3"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "font-sans text-sm text-ink/60"
+  }, overallPct, "% complete"), confirmReset ? /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-2"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "font-sans text-xs text-ink/60"
+  }, "reset progress?"), /*#__PURE__*/React.createElement("button", {
+    onClick: reset,
+    className: "font-sans text-xs text-coral-deep font-semibold"
+  }, "yes"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setConfirmReset(false),
+    className: "font-sans text-xs text-ink/40"
+  }, "no")) : /*#__PURE__*/React.createElement("button", {
+    onClick: () => setConfirmReset(true),
+    className: "font-sans text-xs text-ink/40 hover:text-coral-deep"
+  }, "\u21BB reset"))), pattern.sections.map((section, sIdx) => {
+    const theme = THEMES[section.theme] || THEMES.teal;
+    const sectionDone = section.rows.filter(r => checked[r.id]).length;
+    const sectionPct = Math.round(sectionDone / section.rows.length * 100);
+    const isComplete = sectionDone === section.rows.length;
+    return /*#__PURE__*/React.createElement("div", {
+      key: sIdx,
+      className: `${theme.bg} ${theme.border} border-2 rounded-2xl p-4 mb-4 shadow-sm`
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "flex justify-between items-start mb-2"
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", {
+      className: `font-script text-3xl ${theme.text} flex items-center gap-2 leading-none`
+    }, section.section, isComplete && /*#__PURE__*/React.createElement("span", {
+      className: "text-sage-deep"
+    }, "\u2713")), section.notes && /*#__PURE__*/React.createElement("p", {
+      className: "font-sans text-xs text-ink/60 italic mt-2"
+    }, section.notes)), /*#__PURE__*/React.createElement("span", {
+      className: `font-serif text-sm ${theme.text} whitespace-nowrap ml-2`
+    }, sectionDone, "/", section.rows.length)), /*#__PURE__*/React.createElement("div", {
+      className: "w-full bg-cream/80 rounded-full h-1.5 mb-3 overflow-hidden"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: `h-full ${theme.bar} transition-all duration-300`,
+      style: {
+        width: `${sectionPct}%`
+      }
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "space-y-2"
+    }, section.rows.map(row => {
+      const isChecked = !!checked[row.id];
+      return /*#__PURE__*/React.createElement("button", {
+        key: row.id,
+        onClick: () => toggle(row.id),
+        className: `w-full text-left flex items-start gap-3 p-3 rounded-lg transition-all ${isChecked ? 'bg-cream/70 opacity-60' : 'bg-cream/90 hover:bg-cream shadow-sm'}`
+      }, /*#__PURE__*/React.createElement("div", {
+        className: `flex-shrink-0 w-6 h-6 rounded-md border-2 flex items-center justify-center mt-0.5 transition ${isChecked ? 'bg-teal-deep border-teal-deep text-white' : 'bg-cream border-ink/30'}`
+      }, isChecked && '✓'), /*#__PURE__*/React.createElement("div", {
+        className: "flex-1 min-w-0"
+      }, /*#__PURE__*/React.createElement("span", {
+        className: `font-sans text-sm ${isChecked ? 'line-through text-ink/50' : 'text-ink'}`
+      }, row.label), row.count && /*#__PURE__*/React.createElement("span", {
+        className: `ml-2 font-serif text-xs font-semibold ${isChecked ? 'text-ink/40' : theme.text}`
+      }, row.count)));
+    })));
+  }), overallPct === 100 && /*#__PURE__*/React.createElement("div", {
+    className: "bg-gradient-to-r from-teal-soft via-butter-soft to-coral-soft rounded-2xl p-6 text-center shadow-md border border-ink/10"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-5xl mb-2"
+  }, pattern.emoji, "\u2728"), /*#__PURE__*/React.createElement("h2", {
+    className: "font-serif text-2xl text-ink"
+  }, "you did it"), /*#__PURE__*/React.createElement("p", {
+    className: "font-script text-2xl text-teal-deep mt-1"
+  }, "your ", pattern.title.toLowerCase(), " is complete"))));
 }
 
 // ============================================================
@@ -779,52 +863,91 @@ function TrackerPage({ pattern }) {
 function App() {
   const route = useHashRoute();
   const [userPatterns, setUserPatterns] = useState(() => loadUserPatterns());
-
-  const allPatterns = useMemo(
-    () => ({ ...BUILT_IN_PATTERNS, ...userPatterns }),
-    [userPatterns]
-  );
-
-  const handleSavePattern = (pattern) => {
-    const next = { ...userPatterns, [pattern.id]: pattern };
+  const allPatterns = useMemo(() => ({
+    ...BUILT_IN_PATTERNS,
+    ...userPatterns
+  }), [userPatterns]);
+  const handleSavePattern = pattern => {
+    const next = {
+      ...userPatterns,
+      [pattern.id]: pattern
+    };
     setUserPatterns(next);
     saveUserPatterns(next);
   };
-
-  const handleDeletePattern = (id) => {
-    if (!window.confirm('Delete this project and all its progress?')) return;
-    const next = { ...userPatterns };
+  const handleDeletePattern = id => {
+    const next = {
+      ...userPatterns
+    };
     delete next[id];
     setUserPatterns(next);
     saveUserPatterns(next);
     localStorage.removeItem(PROGRESS_KEY(id));
   };
-
-  if (!route) return <HomePage allPatterns={allPatterns} onDelete={handleDeletePattern} />;
-  if (route === 'builder') return <BuilderPage onSave={handleSavePattern} />;
-
+  if (!route) return /*#__PURE__*/React.createElement(HomePage, {
+    allPatterns: allPatterns,
+    onDelete: handleDeletePattern
+  });
+  if (route === 'builder') return /*#__PURE__*/React.createElement(BuilderPage, {
+    onSave: handleSavePattern
+  });
   const pattern = allPatterns[route];
   if (!pattern) {
-    return (
-      <div className="min-h-screen p-4 flex items-center justify-center">
-        <div className="bg-cream rounded-2xl shadow-md p-6 text-center max-w-sm border border-ink/10">
-          <div className="text-4xl mb-2">🤔</div>
-          <h2 className="font-serif text-xl text-ink mb-2">project not found</h2>
-          <p className="font-sans text-sm text-ink/60 mb-4">There's no project called "{route}".</p>
-          <button
-            onClick={() => navigate('')}
-            className="px-4 py-2 bg-teal hover:bg-teal-deep text-white rounded-lg font-sans text-sm"
-          >
-            back to projects
-          </button>
-        </div>
-      </div>
-    );
+    return /*#__PURE__*/React.createElement("div", {
+      className: "min-h-screen p-4 flex items-center justify-center"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "bg-cream rounded-2xl shadow-md p-6 text-center max-w-sm border border-ink/10"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "text-4xl mb-2"
+    }, "\uD83E\uDD14"), /*#__PURE__*/React.createElement("h2", {
+      className: "font-serif text-xl text-ink mb-2"
+    }, "project not found"), /*#__PURE__*/React.createElement("p", {
+      className: "font-sans text-sm text-ink/60 mb-4"
+    }, "There's no project called \"", route, "\"."), /*#__PURE__*/React.createElement("button", {
+      onClick: () => navigate(''),
+      className: "px-4 py-2 bg-teal hover:bg-teal-deep text-white rounded-lg font-sans text-sm"
+    }, "back to projects")));
   }
-  return <TrackerPage pattern={pattern} />;
+  return /*#__PURE__*/React.createElement(TrackerPage, {
+    pattern: pattern
+  });
 }
-
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hasError: false
+    };
+  }
+  static getDerivedStateFromError() {
+    return {
+      hasError: true
+    };
+  }
+  render() {
+    if (this.state.hasError) {
+      return /*#__PURE__*/React.createElement("div", {
+        className: "min-h-screen flex items-center justify-center p-4",
+        style: {
+          background: '#FAF5EC'
+        }
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "bg-cream rounded-2xl shadow-md p-6 text-center max-w-sm border border-ink/10"
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "text-4xl mb-2"
+      }, "\uD83E\uDDF6"), /*#__PURE__*/React.createElement("h2", {
+        className: "font-serif text-xl text-ink mb-2"
+      }, "something went wrong"), /*#__PURE__*/React.createElement("p", {
+        className: "font-sans text-sm text-ink/60 mb-4"
+      }, "Try refreshing the page. Your progress is safe."), /*#__PURE__*/React.createElement("button", {
+        onClick: () => window.location.reload(),
+        className: "px-4 py-2 bg-teal hover:bg-teal-deep text-white rounded-lg font-sans text-sm"
+      }, "refresh")));
+    }
+    return this.props.children;
+  }
+}
+ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(ErrorBoundary, null, /*#__PURE__*/React.createElement(App, null)));
 </script>
 </body>
 </html>

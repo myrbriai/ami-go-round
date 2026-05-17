@@ -1,0 +1,25 @@
+{
+  "name": "ami-go-round",
+  "version": "1.0.0",
+  "description": "Crochet Creator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/myrbriai/ami-go-round.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/myrbriai/ami-go-round/issues"
+  },
+  "homepage": "https://github.com/myrbriai/ami-go-round#readme",
+  "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/preset-react": "^7.28.5"
+  }
+}
