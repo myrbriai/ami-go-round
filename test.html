@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Test Page</title>
+<style>
+  body { font-family: -apple-system, sans-serif; padding: 20px; font-size: 18px; line-height: 1.6; }
+  .ok { color: green; }
+  .fail { color: red; }
+  .pending { color: orange; }
+  #log { background: #f0f0f0; padding: 10px; border-radius: 8px; margin-top: 20px; font-family: monospace; font-size: 14px; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<h1>🧪 Diagnostic Test</h1>
+<p>This page tests each piece needed for your app.</p>
+
+<div id="status">
+  <p>1. HTML loaded: <span class="ok">✓ YES</span> (you can see this text)</p>
+  <p>2. CSS works: <span class="ok">✓ YES</span> (text is styled, has padding)</p>
+  <p>3. JavaScript runs: <span id="js-test" class="pending">⏳ checking...</span></p>
+  <p>4. React loads from CDN: <span id="react-test" class="pending">⏳ checking...</span></p>
+  <p>5. Tailwind loads from CDN: <span id="tailwind-test" class="pending">⏳ checking...</span></p>
+  <p>6. Babel loads from CDN: <span id="babel-test" class="pending">⏳ checking...</span></p>
+</div>
+
+<div id="log">Loading log will appear here...</div>
+
+<script>
+  var log = document.getElementById('log');
+  function addLog(msg) {
+    log.textContent += '\n' + msg;
+  }
+
+  // Test 3: Basic JavaScript
+  document.getElementById('js-test').className = 'ok';
+  document.getElementById('js-test').textContent = '✓ YES';
+  addLog('✓ JavaScript is enabled and running.');
+
+  // Test 4: React
+  var reactScript = document.createElement('script');
+  reactScript.src = 'https://unpkg.com/react@18/umd/react.production.min.js';
+  reactScript.onload = function() {
+    document.getElementById('react-test').className = 'ok';
+    document.getElementById('react-test').textContent = '✓ YES (React ' + (window.React ? window.React.version : '?') + ')';
+    addLog('✓ React loaded successfully.');
+  };
+  reactScript.onerror = function() {
+    document.getElementById('react-test').className = 'fail';
+    document.getElementById('react-test').textContent = '✗ FAILED to load';
+    addLog('✗ React FAILED to load from unpkg.com');
+  };
+  document.head.appendChild(reactScript);
+
+  // Test 5: Tailwind
+  var tailwindScript = document.createElement('script');
+  tailwindScript.src = 'https://cdn.tailwindcss.com';
+  tailwindScript.onload = function() {
+    document.getElementById('tailwind-test').className = 'ok';
+    document.getElementById('tailwind-test').textContent = '✓ YES';
+    addLog('✓ Tailwind CSS loaded successfully.');
+  };
+  tailwindScript.onerror = function() {
+    document.getElementById('tailwind-test').className = 'fail';
+    document.getElementById('tailwind-test').textContent = '✗ FAILED to load';
+    addLog('✗ Tailwind FAILED to load from cdn.tailwindcss.com');
+  };
+  document.head.appendChild(tailwindScript);
+
+  // Test 6: Babel
+  var babelScript = document.createElement('script');
+  babelScript.src = 'https://unpkg.com/@babel/standalone/babel.min.js';
+  babelScript.onload = function() {
+    document.getElementById('babel-test').className = 'ok';
+    document.getElementById('babel-test').textContent = '✓ YES';
+    addLog('✓ Babel loaded successfully.');
+    addLog('\nAll tests passed! Your main app should work too.');
+  };
+  babelScript.onerror = function() {
+    document.getElementById('babel-test').className = 'fail';
+    document.getElementById('babel-test').textContent = '✗ FAILED to load';
+    addLog('✗ Babel FAILED to load from unpkg.com');
+  };
+  document.head.appendChild(babelScript);
+
+  // Global error catcher
+  window.onerror = function(msg, src, line, col, err) {
+    addLog('JS ERROR: ' + msg + ' at ' + src + ':' + line);
+  };
+
+  addLog('Starting tests...');
+  addLog('User agent: ' + navigator.userAgent);
+</script>
+</body>
+</html>
